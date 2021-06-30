@@ -11,55 +11,164 @@
         "eat" becomes "eat-yay"
         "omelet" becomes "omelet-yay" 
 */
-function encodeVowelWord(word) {
-  return ""; // replace this!
+let letters = "abcdefghijklmnopqrstuvwxyz"
+let alphabet = letters.split("")
+let vowels = []
+let consonants = []
+let clusteredConsonants = []
+for (let letter of alphabet){
+  if (letter === "a"){
+    vowels.push(letter)
+  }else if (letter === "e"){
+    vowels.push(letter)
+  }else if(letter === "i"){
+    vowels.push(letter)
+  } else if(letter === "o"){
+    vowels.push(letter)
+  } else if (letter ==="u"){
+    vowels.push(letter)
+  } else if(letter !== vowels) {
+    consonants.push(letter)  
+  }
 }
-
-// Write your unit tests here
-
-/*  --------------------------------------------------------
-    encodeConsonantWord()
-
-    Encode words that begin with a consonant sound from english to pig latin.
-    For words that begin with consonant sounds, all letters before the initial vowel 
-    are placed at the end of the word sequence, preceded by a hyphen "-". Then, "ay" is added. 
+console.log(consonants)
+console.log(vowels)
+for(consonant of consonants){
+  for(let doubleConsonants of consonants){
+    clusteredConsonants.push(consonant+doubleConsonants)
     
-    For example:
-        "latin" becomes "atin-lay"
-        "cheers" becomes "eers-chay"
-*/
+  }
+}
+console.log (clusteredConsonants)
+function encodeVowelWord(word) {
+  for (let vowel of vowels){
+    if (word.startsWith(vowel)){
+      word += "-yay"
+      console.log(word)
+    }
+  }
+  return word; 
+}
+
+let result = encodeVowelWord("eat")
+console.assert(result === "eat-yay",{
+  test: "encodeVowelWord on eat",
+  expected: "eat-yay",
+  result: result
+})
+
+result = encodeVowelWord("apple")
+console.assert(result === "apple-yay",{
+  test: "encodeVowelWord on apple",
+  expected: "apple-yay",
+  result: result
+})
+
 function encodeConsonantWord(word) {
-  return ""; // replace this!
+  for(let beginingLetters of clusteredConsonants){
+    if (word.startsWith(beginingLetters)){
+      let consonantWord = word.split("")
+      beginingLetter = consonantWord.splice(0,1)
+      secondLetter = consonantWord.splice(0,1)
+      
+      word = consonantWord.join("") + `-${beginingLetters}ay`
+      console.log(word)
+    }
+  }
+  for(let consonant of consonants){
+    if(word.startsWith(consonant)){
+      let consonantWord = word.split("")
+      beginingLetter = consonantWord.splice(0,1)
+      word = consonantWord.join("") + `-${consonant}ay`
+      console.log(word)
+    }
+  }
+  return word; // replace this!
 }
 
-// Write your unit tests here
+result = encodeConsonantWord("bagel")
+console.assert(result === "agel-bay", {
+  test:"encodeConsonantWord on bagel",
+  expected: "agel-bay",
+  result: result
+})
+result = encodeConsonantWord("table")
+console.assert(result === "able-tay",{
+  test:"encodeConsonantWord on table",
+  expected:"able-tay",
+  result:result
+})
 
-/*  --------------------------------------------------------
-    encodeWord()
+result = encodeConsonantWord("chair")
+console.assert(result === "air-chay",{
+  test:"encodeConsonantWord on chair",
+  expected:"air-chay",
+  result:result
+})
 
-    Decide whether a given word starts with a vowel sound or consonant sound,
-    and call encodeVowelWord(word) or encodeConsonantWord(word) when relevant.
+result = encodeConsonantWord("share")
+console.assert(result === "are-shay",{
+  test: "encodeConsonantWord on share",
+  expected: "are-shay",
+  result:result
+})
 
-    For example:
-        "eat" becomes "eatyay" because it starts with a vowel "e"
-        "omelet" becomes "omeletyay" because it starts with a vowel "o"
-        "latin" becomes "atin-lay" because it starts with a consonant "l""
-        "cheers" becomes "eers-chay" because it starts with a consonant cluster "ch"
-        "you" becomes "ou-yay" because it starts with a consonant "y"
-*/
 function encodeWord(word) {
-  return ""; // replace this!
+  let lowerCase = word.toLowerCase()
+  word = lowerCase
+  for(let firstLetter of vowels){
+    if(word.startsWith(firstLetter)){
+      return encodeVowelWord(word)
+    }
+  }
+  for(let firstLetter of consonants){
+    if(word.startsWith(firstLetter)){
+      return encodeConsonantWord(word)
+    }
+  }
 }
+result = encodeWord("cheers")
+console.assert(result === "eers-chay",{
+  test:"encodeWord on cheers",
+  expected:"eers-chay",
+  result:result
+}) 
+result = encodeWord("Badmiton")
+console.assert(result === "admiton-bay",{
+  test:"encodeWord on badmiton",
+  expected: "admiton-bay",
+  result:result
+})
+result = encodeWord("ale")
+console.assert(result === "ale-yay",{
+  test:"encodeWord on Ale",
+  expected: "ale-ay",
+  result:result
+})
 
-// Write your unit tests here
-
-/*  --------------------------------------------------------
-    encodeText()    
-
-    Encode a full sentence or paragraph from english to pig latin.
-*/
 function encodeText(text) {
-  return ""; // replace this!
+  let words = text.split(" ")
+  let wordText = []
+  for(word of words){
+    let piglatin = encodeWord(word)
+    wordText.push(piglatin)
+    wordText.push(" ")
+  }
+  console.log(wordText)
+  text = wordText.join("").trimRight()
+  console.log(text)
+  return text
 }
 
-// Write your unit tests here
+result = encodeText("Wow this was fun")
+console.assert(result === "ow-way is-thay as-way un-fay",{
+  test:"encodeText on Wow this was fun",
+  expected:"ow-way is-thay as-way un-fay",
+  result:result
+})
+result = encodeText("Yay this is done")
+console.assert(result === "ay-yay is-thay is-yay one-day",{
+    test:"encodeText on Yay this is done",
+    expected:"ay-yay is-thay is-yay one-day",
+    result:result
+})
