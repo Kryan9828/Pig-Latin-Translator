@@ -31,20 +31,16 @@ for (let letter of alphabet){
     consonants.push(letter)  
   }
 }
-console.log(consonants)
-console.log(vowels)
 for(consonant of consonants){
   for(let doubleConsonants of consonants){
     clusteredConsonants.push(consonant+doubleConsonants)
     
   }
 }
-console.log (clusteredConsonants)
 function encodeVowelWord(word) {
   for (let vowel of vowels){
     if (word.startsWith(vowel)){
       word += "-yay"
-      console.log(word)
     }
   }
   return word; 
@@ -72,7 +68,6 @@ function encodeConsonantWord(word) {
       secondLetter = consonantWord.splice(0,1)
       
       word = consonantWord.join("") + `-${beginingLetters}ay`
-      console.log(word)
     }
   }
   for(let consonant of consonants){
@@ -80,7 +75,6 @@ function encodeConsonantWord(word) {
       let consonantWord = word.split("")
       beginingLetter = consonantWord.splice(0,1)
       word = consonantWord.join("") + `-${consonant}ay`
-      console.log(word)
     }
   }
   return word; // replace this!
@@ -154,9 +148,7 @@ function encodeText(text) {
     wordText.push(piglatin)
     wordText.push(" ")
   }
-  console.log(wordText)
   text = wordText.join("").trimRight()
-  console.log(text)
   return text
 }
 
